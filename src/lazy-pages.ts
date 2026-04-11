@@ -2,6 +2,7 @@ import { lazy } from 'react';
 
 import { dummy } from '@/lib/dummy-page';
 
+export const LandingPage = lazy(() => import('@/features/landing'));
 export const LoginPage = lazy(() => import('@/features/auth/login/pages/login'));
 export const ForgotPasswordPage = lazy(
   () => import('@/features/auth/forgot-password/pages/forgot-password')

@@ -1,9 +1,10 @@
 import { Suspense } from 'react';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import LayoutWrapper from '@/components/layout';
 import AuthGuard from '@/components/providers/auth-guard';
 import AuthLayout from '@/components/providers/auth-layout';
 import {
+    LandingPage,
     LoginPage, ForgotPasswordPage,
     DashboardPage, ThemeSwitcherPage,
     AccessDeniedPage, NotFoundPage,
@@ -19,7 +20,7 @@ import { FullScreenLoader } from './components/loader/loader';
 const s = (el: React.ReactNode) => <Suspense fallback={<FullScreenLoader />}>{el}</Suspense>;
 
 export const router = createBrowserRouter([
-    { path: '/', element: <Navigate to="/dashboard" replace /> },
+    { path: '/', element: s(<LandingPage />) },
 
     /* ── Auth routes ── */
     {
