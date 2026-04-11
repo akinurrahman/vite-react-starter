@@ -6,3 +6,5 @@ export { default as ExportModal } from './export-modal';
 export { default as AnimatedTabs } from './animated-tabs';
 export { default as StatsCard } from './stats-card';
 export { default as BreadcrumpSetter } from './breadcrump-setter';
+export { default as AccessDeniedPage } from './access-denied';
+export { default as NotFoundPage } from './not-found';

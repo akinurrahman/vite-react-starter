@@ -6,10 +6,10 @@ export const LoginPage = lazy(() => import('@/features/auth/login/pages/login'))
 export const ForgotPasswordPage = lazy(
   () => import('@/features/auth/forgot-password/pages/forgot-password')
 );
-export const DashboardPage = lazy(() => import('@/pages/dashboard'));
-export const ThemeSwitcherPage = lazy(() => import('@/pages/theme-switcher'));
-export const AccessDeniedPage = lazy(() => import('@/pages/access-denied'));
-export const NotFoundPage = lazy(() => import('@/pages/not-found'));
+export const DashboardPage = lazy(() => import('@/features/dashboards/admin'));
+export const ThemeSwitcherPage = lazy(() => import('@/features/theme-switcher'));
+export const AccessDeniedPage = lazy(() => import('@/components/shared/access-denied'));
+export const NotFoundPage = lazy(() => import('@/components/shared/not-found'));
 
 // Dummy pages
 export const ActivityPage = dummy('Activity');

@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { useThemeStore } from '@/stores/theme.store';
 
-import { FamilyCard } from './_components/family-card';
-import { FAMILIES } from './_components/theme-data';
+import { FamilyCard } from './components/family-card';
+import { FAMILIES } from './components/theme-data';
 
 export default function ThemeSwitcherPage() {
     const navigate = useNavigate();
