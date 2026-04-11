@@ -1,11 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { ArrowLeft, Home } from 'lucide-react';
 
 import FloatingParticles from '@/components/visuals/floating-particles';
+import { useAuthStore } from '@/stores/auth.store';
+import { DEFAULT_ROUTES_BY_ROLE } from '@/constants/routes';
+import type { UserRole } from '@/constants/ROLES';
 
 export default function NotFoundPage() {
     const navigate = useNavigate();
+
+     const user = useAuthStore(s => s.user);
+        const defaultRoute = DEFAULT_ROUTES_BY_ROLE[user?.role as UserRole] ?? '/dashboard';
 
     return (
         <div className="from-background via-surface to-secondary relative min-h-screen overflow-hidden bg-linear-to-br">
@@ -37,13 +43,12 @@ export default function NotFoundPage() {
 
                         <div className="flex flex-col justify-center gap-4 sm:flex-row">
                             <button
-                                onClick={() => navigate('/')}
                                 className="group bg-gradient-primary hover-scale glow cursor-pointer rounded-xl px-8 py-4 font-semibold transition-all duration-300"
                             >
-                                <span className="flex items-center justify-center gap-2">
+                                <Link to={defaultRoute} className="flex items-center justify-center gap-2">
                                     <Home className="h-5 w-5" />
                                     Go Home
-                                </span>
+                                </Link>
                             </button>
 
                             <button

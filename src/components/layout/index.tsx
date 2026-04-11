@@ -1,12 +1,11 @@
-import React, { type ReactNode } from 'react';
-
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-
 import { AppSidebar } from './app-sidebar';
 import BreadCrump from './breadcrump';
 
-const LayoutWrapper = ({ children }: { children: ReactNode }) => {
+const LayoutWrapper = () => {
     return (
         <SidebarProvider
             style={
@@ -22,7 +21,9 @@ const LayoutWrapper = ({ children }: { children: ReactNode }) => {
                     <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
                     <BreadCrump />
                 </header>
-                <div className="flex-1 overflow-auto p-4 pt-0">{children}</div>
+                <div className="flex-1 overflow-auto p-4 pt-0">
+                    <Outlet />
+                </div>
             </SidebarInset>
         </SidebarProvider>
     );

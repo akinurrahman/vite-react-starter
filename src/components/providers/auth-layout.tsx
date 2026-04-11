@@ -1,16 +1,12 @@
 import { useEffect } from 'react';
-
-import { useNavigate } from 'react-router-dom';
-
+import { Outlet, useNavigate } from 'react-router-dom';
 import { type UserRole } from '@/constants/ROLES';
 import { DEFAULT_ROUTES_BY_ROLE } from '@/constants/routes';
 import { useAuthStore } from '@/stores/auth.store';
-
 import { FullScreenLoader } from '../loader/loader';
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout() {
     const navigate = useNavigate();
-
     const isAuthInitialized = useAuthStore(s => s.isAuthInitialized);
     const accessToken = useAuthStore(s => s.accessToken);
     const user = useAuthStore(s => s.user);
@@ -27,5 +23,5 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         return <FullScreenLoader />;
     }
 
-    return <>{children}</>;
+    return <Outlet />;
 }

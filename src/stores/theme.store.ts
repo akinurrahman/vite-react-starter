@@ -19,7 +19,12 @@ export const useThemeStore = create<ThemeState>()(
         applyTheme(theme);
       },
     }),
-    { name: 'theme-storage' }
+    {
+      name: 'theme-storage',
+      onRehydrateStorage: () => state => {
+        if (state) applyTheme(state.theme);
+      },
+    }
   )
 );
 

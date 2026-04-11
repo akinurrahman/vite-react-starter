@@ -39,7 +39,7 @@ export function DevRoleSwitcher() {
     }
 
     return (
-        <div className="fixed right-4 bottom-4 z-[9999] font-mono text-xs">
+        <div className="fixed right-4 bottom-4 z-9999 font-mono text-xs">
             {open ? (
                 <div
                     className="bg-card border-border w-52 rounded-xl border shadow-2xl"

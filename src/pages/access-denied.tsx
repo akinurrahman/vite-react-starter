@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
-
 import { Shield } from 'lucide-react';
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { type UserRole } from '@/constants/ROLES';
+import { DEFAULT_ROUTES_BY_ROLE } from '@/constants/routes';
+import { useAuthStore } from '@/stores/auth.store';
 
 export default function AccessDeniedPage() {
+    const user = useAuthStore(s => s.user);
+    const defaultRoute = DEFAULT_ROUTES_BY_ROLE[user?.role as UserRole] ?? '/dashboard';
+
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-50">
             <Card className="w-full max-w-md">
@@ -21,7 +25,7 @@ export default function AccessDeniedPage() {
                         you believe this is an error.
                     </p>
                     <Button asChild className="w-full">
-                        <Link to="/dashboard">Return to Dashboard</Link>
+                        <Link to={defaultRoute}>Return to Home</Link>
                     </Button>
                 </CardContent>
             </Card>
