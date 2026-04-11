@@ -13,7 +13,7 @@ interface ThemeState {
 export const useThemeStore = create<ThemeState>()(
   persist(
     set => ({
-      theme: 'light',
+      theme: 'stone-light',
       setTheme: theme => {
         set({ theme });
         applyTheme(theme);
@@ -29,8 +29,8 @@ export const useThemeStore = create<ThemeState>()(
 );
 
 const ALL_THEME_CLASSES = [
-  'light',
-  'dark',
+  'stone-light',
+  'stone-dark',
   'forest',
   'forest-light',
   'crimson',
@@ -48,7 +48,7 @@ function applyTheme(theme: string) {
   root.classList.remove(...ALL_THEME_CLASSES);
   if (theme === 'system') {
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    root.classList.add(isDark ? 'dark' : 'light');
+    root.classList.add(isDark ? 'stone-dark' : 'stone-light');
   } else {
     root.classList.add(theme);
   }

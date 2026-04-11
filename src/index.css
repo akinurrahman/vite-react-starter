@@ -1,9 +1,9 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.stone-dark *));
 
-:root {
+.stone-light {
   --base-50: oklch(0.985 0.003 88);
   --base-100: oklch(0.963 0.006 85);
   --base-200: oklch(0.922 0.01 78);
@@ -70,7 +70,7 @@
   --sidebar-ring: var(--primary-500);
 }
 
-.dark {
+.stone-dark {
   --background: oklch(0.148 0.006 36);
   --foreground: var(--base-100);
   --card: oklch(0.192 0.008 38);
