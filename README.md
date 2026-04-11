@@ -1,155 +1,108 @@
-# react-auth-starter
+# React Auth Starter
 
-A production-ready React authentication starter built with **Vite + React 19 + TypeScript**, mirroring the structure and quality of `next-auth-starter` but without the Next.js dependency.
+A feature-based React starter template focused on clean architecture, modern tooling, and a complete authentication flow.  
+Originally built for personal use by **Akinur Rahman**, now shared publicly in case it helps someone skip the boring setup phase.
+
+## Overview
+
+This is a production-ready frontend starter built with Vite and structured around a scalable feature-based architecture.  
+It includes a full authentication flow, token refresh handling, Axios utilities, UI foundations, and the essential setup needed to start shipping features immediately.
+
+## Features
+
+- Feature-based folder architecture
+- React Router v7 with lazy-loaded pages
+- Authentication (login, logout, refresh token)
+- Access-denied handling & protected routes
+- Role-based sidebar and route access control
+- Zustand state with persisted auth (cookie storage)
+- Axios instance with interceptors
+- Token refresh queueing and retry logic
+- TanStack Query integration
+- Shadcn UI with TailwindCSS v4
+- Multi-theme support (6 colour families, light/dark each)
+- Reusable UI components (input, loader, data-table, dialogs, etc.)
+- Helper utilities (cookies, debounce, API logging)
+- Zod validation for forms
+- Husky, lint-staged, and Prettier configured
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Vite 8 + React 19 + TypeScript |
-| Router | React Router v7 (`createBrowserRouter`) |
-| Styling | Tailwind CSS v4 + OKLCH design tokens |
-| State | Zustand v5 (persist + devtools) |
-| Server State | TanStack Query v5 |
-| Forms | React Hook Form v7 + Zod v4 |
-| UI Components | shadcn/ui (new-york style, 35 components) |
-| HTTP Client | Axios (dual versioned instances v1/v2) |
-| Charts | Recharts v3 |
-| Animations | Framer Motion v12 |
+- **Vite 8**
+- **React 19**
+- **TypeScript**
+- **React Router v7**
+- **Zustand**
+- **TanStack Query**
+- **TanStack Table**
+- **Axios**
+- **TailwindCSS 4**
+- **Shadcn UI**
+- **Zod**
+- **Sonner**
+- **Framer Motion**
+- **Recharts**
 
-## Project Structure
+## Folder Structure
 
-\`\`\`
+```plaintext
 src/
-├── assets/           # Static assets (warehouse.webp, etc.)
-├── components/
-│   ├── layout/       # App shell (header, sidebar, nav)
-│   ├── loader/       # Full-screen loader
-│   ├── providers/    # AuthGuard, AuthLayout, QueryProvider
-│   ├── shared/       # Reusable page components
-│   ├── ui/           # shadcn/ui components (35 components)
-│   └── visuals/      # Decorative components
-├── constants/        # Routes, roles, sidebar items
-├── features/
-│   ├── auth/         # Login + forgot-password flows
-│   └── dashboards/   # Admin dashboard
-├── hooks/            # Shared custom hooks
-├── lib/              # Utilities (api, format, error, etc.)
-├── pages/            # Route page components
-│   ├── access-denied.tsx
-│   ├── dashboard.tsx
-│   ├── management.tsx
-│   ├── not-found.tsx
-│   └── theme-switcher/   # Multi-theme picker (6 themes)
-├── stores/           # Zustand stores (auth, breadcrumb, sidebar, theme)
-├── systems/
-│   ├── confirmation/ # Confirmation dialog system
-│   ├── data-table/   # Full-featured data table with URL sync
-│   └── form-input/   # Dynamic form field system
-├── types/            # Global TypeScript types
-├── validators/       # Shared Zod schemas
-├── App.tsx           # Root: <Providers><RouterProvider/>
-├── main.tsx          # Entry point
-└── router.tsx        # createBrowserRouter route config
-\`\`\`
+├─ features/
+│  ├─ auth/
+│  │  ├─ login/
+│  │  └─ forgot-password/
+│  └─ dashboards/
+│
+├─ components/
+│  ├─ layout/          # sidebar, header, breadcrumb, nav-user
+│  ├─ loader/
+│  ├─ providers/       # auth-guard, query-provider, auth-layout
+│  ├─ shared/          # page-header, stats-card, search-input, etc.
+│  └─ ui/              # shadcn primitives
+│
+├─ systems/
+│  ├─ data-table/
+│  ├─ filters/
+│  ├─ form-input/      # all field types
+│  └─ confirmation/
+│
+├─ lib/
+│  ├─ api/             # axios instance, interceptors, token refresh
+│  ├─ cookie-helper.ts
+│  ├─ route-access.ts
+│  ├─ debounce.ts
+│  └─ utils.ts
+│
+├─ stores/
+│  ├─ auth.store.ts
+│  ├─ sidebar.store.ts
+│  ├─ breadcrumb.ts
+│  └─ theme.store.ts
+│
+├─ constants/          # ROLES, SIDEBAR_ITEMS, routes
+├─ hooks/
+├─ types/
+├─ validators/
+├─ lazy-pages.ts       # all React.lazy() page imports
+└─ router.tsx
+```
 
-## Getting Started
+## Notes
 
-### Prerequisites
+- Frontend-only template that works with any backend providing access and refresh tokens.
+- Automatic token refreshing handled through Axios interceptors with request queuing.
+- Authentication state persisted via Zustand + cookie storage.
+- Role-based access: sidebar items and routes are filtered per role at runtime using `SIDEBAR_ITEMS` configuration.
+- Multi-theme system: 12 themes (6 colour families × light/dark) applied via CSS class on `<html>`, persisted with Zustand.
+- Folder structure kept intentionally minimal but scalable for real production use.
+- Not a demo project. This template is meant to be a solid base for real applications.
 
-- Node.js 20+
-- pnpm 9+
+## Author
 
-### Installation
+**Akinur Rahman**  
+Frontend-focused Fullstack Developer  
+Originally created for personal use; shared publicly for anyone who wants a head start.
 
-\`\`\`bash
-pnpm install
-\`\`\`
+## License
 
-### Environment Variables
-
-Copy \`.env.example\` to \`.env.local\` and fill in your values:
-
-\`\`\`bash
-cp .env.example .env.local
-\`\`\`
-
-| Variable | Description |
-|---|---|
-| \`VITE_API_URL\` | Backend API base URL |
-| \`VITE_FILES_URL\` | File storage base URL |
-
-### Development
-
-\`\`\`bash
-pnpm dev
-\`\`\`
-
-### Build
-
-\`\`\`bash
-pnpm build
-\`\`\`
-
-### Type-check + Lint + Format
-
-\`\`\`bash
-pnpm check-all   # type-check + lint + format check
-pnpm fix-all     # format + lint --fix
-\`\`\`
-
-## Authentication Flow
-
-- **\`AuthGuard\`** — Protects routes; redirects unauthenticated users to \`/login\`
-- **\`AuthLayout\`** — Wraps auth pages; redirects authenticated users to their default dashboard
-- Token refresh is handled automatically via Axios interceptors (\`src/lib/api/interceptors.ts\`)
-- Auth state is persisted in cookies via Zustand + \`cookieStorage\` adapter
-
-## Theme System
-
-Six handcrafted OKLCH colour themes, each with a light and dark variant:
-
-| Theme | Light ID | Dark ID |
-|---|---|---|
-| Stone (default) | \`light\` | \`dark\` |
-| Forest | \`forest-light\` | \`forest\` |
-| Crimson | \`crimson\` | \`crimson-dark\` |
-| Amber | \`amber\` | \`amber-dark\` |
-| Obsidian | \`obsidian-light\` | \`obsidian\` |
-| Violet | \`violet-light\` | \`violet-dark\` |
-
-Navigate to \`/theme-switcher\` to preview and apply themes. The selected theme is persisted in \`localStorage\`.
-
-## Key Adaptations from next-auth-starter
-
-| Next.js API | React Router Equivalent |
-|---|---|
-| \`useRouter().push(path)\` | \`useNavigate()(path)\` |
-| \`usePathname()\` | \`useLocation().pathname\` |
-| \`<Link href="">\` | \`<Link to="">\` |
-| \`nuqs useQueryState\` | \`useSearchParams\` + \`useNavigate\` |
-| \`next/image <Image>\` | Plain \`<img>\` |
-| \`process.env.NEXT_PUBLIC_*\` | \`import.meta.env.VITE_*\` |
-| \`next-themes useTheme\` | Custom \`useThemeStore\` (Zustand) |
-| Route groups / layouts | \`createBrowserRouter\` flat routes with wrapper components |
-
-## Systems
-
-### Data Table (\`src/systems/data-table/\`)
-
-Full-featured TanStack Table implementation with:
-- URL-synced pagination via \`useSearchParams\`
-- Inline row editing (\`EditableCell\`)
-- Sort, column visibility, skeleton loading states
-
-### Form Input (\`src/systems/form-input/\`)
-
-Dynamic form field dispatcher supporting:
-- Text, number, password, item-list inputs
-- Single/multi-select with cascade support
-- Textarea, checkbox, switch, radio group, slider
-- File upload with progress bar and drag-and-drop
-
-### Confirmation (\`src/systems/confirmation/\`)
-
-Global confirmation dialog system with variant styles (delete/confirm/warning) driven by a Zustand store.
+MIT
