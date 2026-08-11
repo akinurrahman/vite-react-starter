@@ -1,62 +1,45 @@
-import type { AxiosError, AxiosRequestConfig } from 'axios';
-
+import type { AxiosRequestConfig } from 'axios';
 import { api } from './api';
 
-interface ApiCallOptions {
-  version?: keyof typeof api;
-  contentType?: string;
+export type ApiVersion = keyof typeof api;
+
+type ApiCallOptions = {
+  method?: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+  body?: unknown;
+  params?: Record<string, unknown>;
+  signal?: AbortSignal;
+  version?: ApiVersion;
   responseType?: AxiosRequestConfig['responseType'];
+  contentType?: string;
   headers?: Record<string, string>;
-}
+};
 
-function isAxiosError(error: unknown): error is AxiosError {
-  return typeof error === 'object' && error !== null && 'isAxiosError' in error;
-}
+export async function apiCall<T>(endpoint: string, options: ApiCallOptions = {}): Promise<T> {
+  const {
+    method = 'GET',
+    body,
+    params,
+    signal,
+    version = 'v1',
+    responseType = 'json',
+    contentType = 'application/json',
+    headers = {},
+  } = options;
 
-export async function apiCall(
-  endpoint: string,
-  data?: unknown,
-  method: 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT' = 'GET',
-  options?: ApiCallOptions
-) {
-  try {
-    const {
-      version = 'v1',
-      contentType = 'application/json',
-      responseType = 'json',
-      headers = {},
-    } = options || {};
+  const client = api[version];
 
-    const client = api[version];
-    const config: AxiosRequestConfig = { responseType, headers: { ...headers } };
+  // let axios set the multipart boundary itself
+  const isFormData = body instanceof FormData;
 
-    if (!(data instanceof FormData)) {
-      config.headers = config.headers || {};
-      config.headers['Content-Type'] = contentType;
-    }
+  const res = await client.request<T>({
+    url: endpoint,
+    method,
+    data: body,
+    params,
+    signal,
+    responseType,
+    headers: isFormData ? headers : { 'Content-Type': contentType, ...headers },
+  });
 
-    let res;
-    switch (method) {
-      case 'POST':
-        res = await client.post(endpoint, data, config);
-        break;
-      case 'PATCH':
-        res = await client.patch(endpoint, data, config);
-        break;
-      case 'PUT':
-        res = await client.put(endpoint, data, config);
-        break;
-      case 'DELETE':
-        res = await client.delete(endpoint, config);
-        break;
-      default:
-        res = await client.get(endpoint, { ...config, params: data });
-        break;
-    }
-
-    return res.data;
-  } catch (err) {
-    if (isAxiosError(err)) throw err;
-    throw new Error('Unexpected error in apiCall');
-  }
+  return res.data;
 }
